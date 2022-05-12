@@ -105,6 +105,7 @@ function calcData(WorldArray) {
       worldTotals["deathsNew"] += WorldArray[i].today.deaths;
     }
   }
+  contDataObjArr.unshift(worldTotals);
 }
 function selectCountryInfo(id) {
   if (id === "0") {
@@ -114,7 +115,8 @@ function selectCountryInfo(id) {
         countryInfoArr[i].removeChild(countryInfoArr[i].children[0]);
       }
     }
-    countryInfo.classList.add("display-none");
+    countrySelector.innerHTML = ``;
+    // countryInfo.classList.add("display-none");
   } else {
     countrySelector.innerHTML = `<option selected="selected" disabled="">Select country</option>`;
     for (let i = 0; i < resultsArr[id].value.data.length; i++) {
@@ -123,7 +125,26 @@ function selectCountryInfo(id) {
       countrySelection.setAttribute("value", resultsArr[id].value.data[i].cca2);
       countrySelector.appendChild(countrySelection);
     }
-    countryInfo.classList.remove("display-none");
+    // countryInfo.classList.remove("display-none");
+  }
+  showContinentInfo(id);
+}
+function showContinentInfo(id) {
+  // console.log(countryInfo);
+  const countryInfoArr = countryInfo.children;
+  for (let i = 0; i < countryInfoArr.length - 1; i++) {
+    if (countryInfoArr[i].children.length > 0) {
+      countryInfoArr[i].removeChild(countryInfoArr[i].children[0]);
+    }
+    let span = document.createElement("span");
+    let val = countryInfoArr[i].getAttribute("val");
+    if (i < 4) {
+      span.innerText = ` ${contDataObjArr[id][val]}`;
+    } else {
+      let newCase = `${val}New`;
+      span.innerText = ` ${contDataObjArr[id][newCase]}`;
+    }
+    countryInfoArr[i].appendChild(span);
   }
 }
 
