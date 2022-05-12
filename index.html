@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/normalize.css" />
+    <link rel="stylesheet" href="./assets/style.css" />
+    <link
+      rel="stylesheet"
+      media="screen and (max-width: 850px)"
+      href="./assets/mobile.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/d0fa9b066d.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <title>COVID-19 Information App</title>
+  </head>
+  <body>
+    <div id="container">
+      <h1>COVID-19 Information App</h1>
+      <div class="country-info display-none">
+        <div class="info" val="confirmed">Total cases:</div>
+        <div class="info" val="deaths">Total deaths:</div>
+        <div class="info" val="recovered">Total recovered:</div>
+        <div class="info" val="critical">Critical:</div>
+        <div class="info" val="confirmed">New cases:</div>
+        <div class="info" val="deaths">New deaths:</div>
+        <select name="countries" id="countries">
+          <!-- <option disabled="">Select country</option> -->
+        </select>
+      </div>
+      <div class="box"></div>
+      <div class="btns-container-actions">
+        <button class="btn btn__confirmed btn__hover">Confirmed</button>
+        <button class="btn btn__deaths btn__hover">Deaths</button>
+        <button class="btn btn__recovered btn__hover">Recovered</button>
+        <button class="btn btn__critical btn__hover">Critical</button>
+      </div>
+      <div class="btns-container-continents">
+        <button class="btn btn__hover" data-cnt="world" data-id="0">
+          World
+        </button>
+        <button class="btn btn__hover" data-cnt="asia" data-id="1">Asia</button>
+        <button class="btn btn__hover" data-cnt="africa" data-id="2">
+          Africa
+        </button>
+        <button class="btn btn__hover" data-cnt="americas" data-id="3">
+          Americas
+        </button>
+        <button class="btn btn__hover" data-cnt="europe" data-id="4">
+          Europe
+        </button>
+        <button class="btn btn__hover" data-cnt="australia" data-id="5">
+          Australia
+        </button>
+      </div>
+    </div>
+
+    <div id="loader"><img src="./assets/loader.svg" alt="" /></div>
+    <!-- <canvas id="myChart" width="400" height="400"></canvas> -->
+  </body>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="./scripts/index.js"></script>
+</html>
