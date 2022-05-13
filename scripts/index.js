@@ -40,7 +40,11 @@ btnContinent.addEventListener("click", (e) => {
       btnAction.style.visibility = "visible";
     }
     myChart.destroy();
-    drawChart(contDataObjArr[e.target.dataset.id], "bar", e.target.dataset.id);
+    drawChartCont(
+      contChartTotals(contDataObjArr[e.target.dataset.id], actions),
+      actions,
+      e.target.dataset.id
+    );
     selectCountryInfo(e.target.dataset.id);
   }
 });
@@ -88,7 +92,7 @@ async function getData() {
   createContinentObj(resultsArr[5].value.data, australia);
   calcData(resultsArr[0].value.data.data);
   showContinentInfo(0);
-  drawChart(contDataObjArr[0], "bar", 0);
+  drawChartCont(contChartTotals(contDataObjArr[0], actions), actions, 0);
   loader.classList.add("display-none");
 }
 getData();
@@ -211,23 +215,16 @@ function worldChartTotals(type) {
   }
   return chartTypeArr;
 }
-function drawChart(obj, type, contId) {
+function drawChartCont(dataArr, labelArr, contId) {
   myChart = new Chart(ctx, {
     plugins: [ChartDataLabels],
-    type: type,
+    type: "bar",
     data: {
-      labels: Object.getOwnPropertyNames(obj),
+      labels: labelArr,
       datasets: [
         {
           label: `${contName[contId]}`,
-          data: [
-            obj.confirmed,
-            obj.critical,
-            obj.deaths,
-            obj.recovered,
-            obj.confirmedNew,
-            obj.deathsNew,
-          ],
+          data: dataArr,
           backgroundColor: [
             "rgba(255, 99, 132, 0.8)",
             "rgba(54, 162, 235, 0.8)",
