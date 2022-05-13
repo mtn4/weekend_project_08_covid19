@@ -70,8 +70,7 @@ function handleActionBtn(e) {
     drawChartActions(
       worldChartTotals(e.target.dataset.val),
       contName.slice(1),
-      e.target.dataset.val,
-      "pie"
+      e.target.dataset.val
     );
   }
 }
@@ -301,10 +300,9 @@ function drawChartCont(dataArr, labelArr, name) {
     },
   });
 }
-function drawChartActions(dataArr, labelArr, action, type) {
+function drawChartActions(dataArr, labelArr, action) {
   myChart = new Chart(ctx, {
-    plugins: [ChartDataLabels],
-    type: type,
+    type: "pie",
     data: {
       labels: labelArr,
       datasets: [

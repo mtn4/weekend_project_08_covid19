@@ -1,0 +1,16 @@
+@media (orientation: portrait) {
+  .portrait {
+    margin: auto;
+    width: 95%;
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #container {
+    display: none;
+  }
+  .loader {
+    display: none;
+  }
+}

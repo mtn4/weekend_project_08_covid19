@@ -1,0 +1,28 @@
+.country-info {
+  gap: 10px;
+}
+.info {
+  padding: 1px 1px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+}
+h1 {
+  display: none;
+}
+.chart {
+  overflow: hidden;
+}
+.btn {
+  padding: 1px 1px;
+  margin: 0 1px;
+  border-radius: 1px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+}
+select {
+  height: 30px;
+  width: 100px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+}
+#container {
+  gap: 10px;
+}
