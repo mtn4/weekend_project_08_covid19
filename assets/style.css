@@ -94,3 +94,7 @@ select {
   height: 80%;
   position: relative;
 }
+
+.selected {
+  border: 3px solid red;
+}
