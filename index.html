@@ -28,16 +28,24 @@
         <div class="info" val="critical">Critical:</div>
         <div class="info" val="confirmed">New cases:</div>
         <div class="info" val="deaths">New deaths:</div>
-        <select name="countries" id="countries">
-          <!-- <option disabled="">Select country</option> -->
-        </select>
+        <select name="countries" id="countries"></select>
       </div>
-      <div class="box"></div>
+      <div class="chart">
+        <canvas id="myChart"></canvas>
+      </div>
       <div class="btns-container-actions">
-        <button class="btn btn__confirmed btn__hover">Confirmed</button>
-        <button class="btn btn__deaths btn__hover">Deaths</button>
-        <button class="btn btn__recovered btn__hover">Recovered</button>
-        <button class="btn btn__critical btn__hover">Critical</button>
+        <button class="btn btn__confirmed btn__hover" data-val="confirmed">
+          Confirmed
+        </button>
+        <button class="btn btn__deaths btn__hover" data-val="deaths">
+          Deaths
+        </button>
+        <button class="btn btn__recovered btn__hover" data-val="recovered">
+          Recovered
+        </button>
+        <button class="btn btn__critical btn__hover" data-val="critical">
+          Critical
+        </button>
       </div>
       <div class="btns-container-continents">
         <button class="btn btn__hover" data-cnt="world" data-id="0">
@@ -58,10 +66,9 @@
         </button>
       </div>
     </div>
-
     <div id="loader"><img src="./assets/loader.svg" alt="" /></div>
-    <!-- <canvas id="myChart" width="400" height="400"></canvas> -->
   </body>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="./scripts/index.js"></script>
 </html>

@@ -41,13 +41,7 @@ h1 {
   align-items: center;
   gap: 35px;
   height: 90%;
-  width: 65%;
-}
-
-.box {
-  width: 100%;
-  height: 100%;
-  border: 1px solid black;
+  width: 85%;
 }
 
 .btn {
@@ -97,4 +91,11 @@ select {
 }
 .display-none {
   display: none !important;
+}
+
+.chart {
+  width: 100%;
+  height: 80%;
+  border: 1px solid black;
+  position: relative;
 }

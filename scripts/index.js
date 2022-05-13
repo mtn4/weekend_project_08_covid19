@@ -1,7 +1,9 @@
 const btnContinent = document.querySelector(".btns-container-continents");
+const btnAction = document.querySelector(".btns-container-actions");
 const countryInfo = document.querySelector(".country-info");
 const countrySelector = document.querySelector("select");
 const loader = document.getElementById("loader");
+const ctx = document.getElementById("myChart").getContext("2d");
 countrySelector.addEventListener("change", showCountryInfo);
 
 let resultsArr = [];
@@ -20,10 +22,37 @@ let worldTotals = {
   confirmedNew: 0,
   deathsNew: 0,
 };
+let contName = ["World", "Asia", "Africa", "Americas", "Europe", "Australia"];
+let actions = [
+  "confirmed",
+  "critical",
+  "deaths",
+  "recovered",
+  "confirmedNew",
+  "deathsNew",
+];
+let myChart = "";
 btnContinent.addEventListener("click", (e) => {
   if (e.target.dataset.cnt !== undefined) {
+    if (e.target.dataset.id !== "0") {
+      btnAction.style.visibility = "hidden";
+    } else {
+      btnAction.style.visibility = "visible";
+    }
+    myChart.destroy();
+    drawChart(contDataObjArr[e.target.dataset.id], "bar", e.target.dataset.id);
     selectCountryInfo(e.target.dataset.id);
-    drawContChart(e.target.dataset.id);
+  }
+});
+btnAction.addEventListener("click", (e) => {
+  if (e.target.dataset.val !== undefined) {
+    myChart.destroy();
+    drawChartActions(
+      worldChartTotals(e.target.dataset.val),
+      contName.slice(1),
+      e.target.dataset.val,
+      "pie"
+    );
   }
 });
 async function getData() {
@@ -58,6 +87,8 @@ async function getData() {
   createContinentObj(resultsArr[4].value.data, europe);
   createContinentObj(resultsArr[5].value.data, australia);
   calcData(resultsArr[0].value.data.data);
+  showContinentInfo(0);
+  drawChart(contDataObjArr[0], "bar", 0);
   loader.classList.add("display-none");
 }
 getData();
@@ -116,7 +147,6 @@ function selectCountryInfo(id) {
       }
     }
     countrySelector.innerHTML = ``;
-    // countryInfo.classList.add("display-none");
   } else {
     countrySelector.innerHTML = `<option selected="selected" disabled="">Select country</option>`;
     for (let i = 0; i < resultsArr[id].value.data.length; i++) {
@@ -125,12 +155,10 @@ function selectCountryInfo(id) {
       countrySelection.setAttribute("value", resultsArr[id].value.data[i].cca2);
       countrySelector.appendChild(countrySelection);
     }
-    // countryInfo.classList.remove("display-none");
   }
   showContinentInfo(id);
 }
 function showContinentInfo(id) {
-  // console.log(countryInfo);
   const countryInfoArr = countryInfo.children;
   for (let i = 0; i < countryInfoArr.length - 1; i++) {
     if (countryInfoArr[i].children.length > 0) {
@@ -169,44 +197,118 @@ async function showCountryInfo(e) {
   }
   loader.classList.add("display-none");
 }
-
-function drawContChart() {
-  // console.log(resultsArr[1].value.data);
+function contChartTotals(contObj, actionsArr) {
+  let newArr = [];
+  for (let i = 0; i < 6; i++) {
+    newArr.push(contObj[actionsArr[i]]);
+  }
+  return newArr;
 }
-// const ctx = document.getElementById("myChart").getContext("2d");
-// const myChart = new Chart(ctx, {
-//   type: "line",
-//   data: {
-//     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-//     datasets: [
-//       {
-//         label: "# of Votes",
-//         data: [12, 19, 3, 5, 2, 3],
-//         backgroundColor: [
-//           "rgba(255, 99, 132, 0.2)",
-//           "rgba(54, 162, 235, 0.2)",
-//           "rgba(255, 206, 86, 0.2)",
-//           "rgba(75, 192, 192, 0.2)",
-//           "rgba(153, 102, 255, 0.2)",
-//           "rgba(255, 159, 64, 0.2)",
-//         ],
-//         borderColor: [
-//           "rgba(255, 99, 132, 1)",
-//           "rgba(54, 162, 235, 1)",
-//           "rgba(255, 206, 86, 1)",
-//           "rgba(75, 192, 192, 1)",
-//           "rgba(153, 102, 255, 1)",
-//           "rgba(255, 159, 64, 1)",
-//         ],
-//         borderWidth: 1,
-//       },
-//     ],
-//   },
-//   options: {
-//     scales: {
-//       y: {
-//         beginAtZero: true,
-//       },
-//     },
-//   },
-// });
+function worldChartTotals(type) {
+  let chartTypeArr = [];
+  for (let i = 1; i < contDataObjArr.length; i++) {
+    chartTypeArr.push(contDataObjArr[i][type]);
+  }
+  return chartTypeArr;
+}
+function drawChart(obj, type, contId) {
+  myChart = new Chart(ctx, {
+    plugins: [ChartDataLabels],
+    type: type,
+    data: {
+      labels: Object.getOwnPropertyNames(obj),
+      datasets: [
+        {
+          label: `${contName[contId]}`,
+          data: [
+            obj.confirmed,
+            obj.critical,
+            obj.deaths,
+            obj.recovered,
+            obj.confirmedNew,
+            obj.deathsNew,
+          ],
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.8)",
+            "rgba(54, 162, 235, 0.8)",
+            "rgba(255, 206, 86, 0.8)",
+            "rgba(75, 192, 192, 0.8)",
+            "rgba(153, 102, 255, 0.8)",
+            "rgba(255, 159, 64, 0.8)",
+          ],
+          borderColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+            "rgba(255, 159, 64, 1)",
+          ],
+          borderWidth: 1,
+          datalabels: {
+            color: "black",
+            anchor: "end",
+            align: "top",
+          },
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+}
+function drawChartActions(dataArr, labelArr, action, type) {
+  myChart = new Chart(ctx, {
+    plugins: [ChartDataLabels],
+    type: type,
+    data: {
+      labels: labelArr,
+      datasets: [
+        {
+          data: dataArr,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.8)",
+            "rgba(54, 162, 235, 0.8)",
+            "rgba(255, 206, 86, 0.8)",
+            "rgba(75, 192, 192, 0.8)",
+            "rgba(153, 102, 255, 0.8)",
+            "rgba(255, 159, 64, 0.8)",
+          ],
+          borderColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+            "rgba(255, 159, 64, 1)",
+          ],
+          borderWidth: 1,
+          datalabels: {
+            color: "black",
+            anchor: "end",
+            align: "top",
+          },
+        },
+      ],
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: `${
+            action.charAt(0).toUpperCase() + action.slice(1)
+          } Cases Continents Chart`,
+        },
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+    },
+  });
+}
