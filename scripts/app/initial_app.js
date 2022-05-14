@@ -46,7 +46,7 @@ export async function getData() {
   createContinentObj(resultsArr[5].value.data, australia);
   calcData(resultsArr[0].value.data.data);
   showContinentInfo(0);
-  drawChartCont(contChartTotals(contDataObjArr[0], actions), actions, 0);
+  drawChartCont(contChartTotals(contDataObjArr[0], actions), actions, "World");
   loader.classList.add("display-none");
 }
 
