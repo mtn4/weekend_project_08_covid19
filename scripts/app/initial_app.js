@@ -1,3 +1,18 @@
+import { initialConstants } from "../constants/script.constants.js";
+import { drawChartCont, showContinentInfo, contChartTotals } from "./charts.js";
+const {
+  actions,
+  contObjArr,
+  asia,
+  africa,
+  americas,
+  europe,
+  australia,
+  contDataObjArr,
+  worldTotals,
+} = initialConstants;
+
+export let resultsArr = [];
 export async function getData() {
   const asiaData = axios.get(
     "https://nameless-citadel-58066.herokuapp.com/https://restcountries.herokuapp.com/api/v1/region/asia"
