@@ -15,11 +15,11 @@ export function handleContinentBtn(e) {
     removeBorder(btnContinent.children);
     e.target.classList.add("selected");
     if (e.target.dataset.id !== "0") {
-      removeBorder(btnAction.children);
       btnAction.style.visibility = "hidden";
     } else {
       btnAction.style.visibility = "visible";
     }
+    removeBorder(btnAction.children);
     myChart.destroy();
     drawChartCont(
       contChartTotals(contDataObjArr[e.target.dataset.id], actions),
